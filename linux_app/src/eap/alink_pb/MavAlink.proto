@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+message ReportDroneIdPB {
+  string tracerName = 1;
+  int32 uDroneNum = 2;
+
+  message DroneInfo {
+	uint32 productType = 1;
+	string droneName = 2;
+	string serialNum = 3;
+	int32 droneLongitude = 4;
+	int32 droneLatitude = 5;
+	int32 droneHeight = 6;
+	int32 droneYawAngle = 7;
+	int32 droneSpeed = 8;
+	int32 speedderection = 9;
+	int32 droneVerticalSpeed = 10;
+	int32 pilotLongitude = 11;
+	int32 pilotLatitude = 12;
+	uint32 uFreq = 13;
+	uint32 uDistance = 14;
+	uint32 dangerLevels = 15;
+  }
+
+  repeated DroneInfo drones = 3;
+}

@@ -1,0 +1,20 @@
+include_directories(../../include/cfg)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/alink_pb)
+
+include_directories(../../include/cmdproc)
+include_directories(../../include/hal)
+include_directories(../../include/module)
+include_directories(../../include/pub)
+include_directories(../../include/sys)
+include_directories(../../include/thread)
+include_directories(../../include/os_adapter)
+include_directories(${CMAKE_SOURCE_DIR}/src/srv/log)
+include_directories(${CMAKE_SOURCE_DIR}/src/srv/cli)
+include_directories(${CMAKE_SOURCE_DIR}/src/tracer)
+include_directories(${CMAKE_SOURCE_DIR}/src/tracer/hal)
+include_directories(${CMAKE_SOURCE_DIR}/src/tracer/hal/dma)
+
+
+aux_source_directory(. DIR_LIB_SRCS)
+add_library(sys ${DIR_LIB_SRCS})
+set (SYS_BASE_LIBS sys PARENT_SCOPE)

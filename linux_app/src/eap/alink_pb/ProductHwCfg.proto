@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+// GPIO configuration data
+message PbGpioConfiguration{
+    message PbGpioCfgData{
+
+        enum Direction {
+            DIR_INPUT = 0;
+            DIR_OUTPUT = 1;
+        }
+
+        enum Mode {
+            MODE_MIO = 0;
+            MODE_EMIO = 1;
+            MODE_AXI_GPIO = 2;
+            MODE_AXI_BRAM = 3;
+            MODE_GPIO_MODE_MAX = 0xFF; // End, invalid value
+        }
+
+        enum VoltageLevel
+        {
+            VOL_LOW = 0;
+            VOL_HIGH = 1;
+        }
+
+        string              name = 1; // Signal defination
+        Direction           direction = 2; //Input/output
+        bool                enabled = 3; // Whether need init; 0:Not init,export only, 1: Init ---->uint8_t INPUT_ARG.Enable
+        Mode                mode = 4; // Whether need init(0:Not init, 1: Init) ---->uint8_t INPUT_ARG.GpioMode
+        int32               deviceID = 5; // Device ID, ---->uint8_t INPUT_ARG.DeviceId
+        int32               axiChl = 6; // AXI GPIO Channel---->INPUT_ARG.AxiGpioChl
+        int32               pinNum = 7; // Pin Number, absolute pinNum=(MIOPinBase/EMIOPinBase + LinuxPinBase + pinNum) ---->INPUT_ARG.Pin
+        VoltageLevel        initLevel = 8; // Initial Voltage level(1 OR 0), Valid for OUTPUT_ARG only ---->OUTPUT_ARG.InitLevel, 
+    }
+
+    int32                       MioBasePinNum = 1; //PinNum base offset for MIO, default is 0
+    int32                       EmioBasePinNum = 2; //PinNum base offset for MIO, default is 77
+    int32                       LinuxBasePinNum = 3; //PinNum base offset for MIO, default is 333
+    repeated PbGpioCfgData      gpioCfgList = 4 ;// Initial GPIO Configuations
+}
+
+message ProductHwCfg {
+  string productHwType= 1;
+  string  desc = 2;
+
+  //dev nodes.
+  string devTtyTypec = 100;
+  string devTtyMcu2Ps = 101;
+  string devTtyWifiBluetooth = 102;
+
+  //GPIO settings
+  PbGpioConfiguration gpioConfig = 200;
+}
+

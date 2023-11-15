@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+// 支持(无人机,C2,CLI)下发指令采集数据,
+// 存储文件示例: /run/media/mmcblk0p3/log/debug/spectrogram-87.dat
+// 最后日志的文件索引存储在/run/media/mmcblk0p3/log/debug/curr_log_index中
+// 最多存储100份数据文件就会从头覆盖
+message PbSpectrogramAttr{
+  string file_path = 1;                     //采集时频图数据存储路径
+  string file_prefix = 2;                   //采集时频图数据文件名前缀
+  string file_index = 3;                    //采集时频图数据文件的索引
+  int32 file_max_num = 4;                   //采集时频图数据最大存储数量
+}
+
+// 每次打开侦测后自动开始保存算法缓存数据,
+// 存储文件示例: /run/media/mmcblk0p3/log/cache/alg-cache-6.dat
+// 最后日志的文件索引存储在/run/media/mmcblk0p3/log/cache/curr_log_index中
+// 最多存储10份数据文件就会从头覆盖,每份文件最多保存3万帧记录
+message PbAlgCacheAttr{
+  string file_path = 1;                     //算法缓存数据存储路径
+  string file_prefix = 2;                   //算法缓存数据文件名前缀
+  string file_index = 3;                    //算法缓存数据文件的索引
+  int32 file_max_num = 4;                   //算法缓存数据最大存储数量
+  int32 frame_max_num = 5;                  //每次算法缓存数据最大帧数,超出后不再保存
+}
+
+// 算法发现异常时自动保存当前输入数据,该数据已经过spectrum模块换位处理
+// 存储文件示例: /run/media/mmcblk0p3/log/except/alg-except-59.dat
+// 最后日志的文件索引存储在/run/media/mmcblk0p3/log/except/curr_log_index中
+// 最多存储100份数据文件就会从头覆盖
+message PbAlgExceptAttr{
+  string file_path = 1;                     //算法异常数据存储路径
+  string file_prefix = 2;                   //算法异常数据文件名前缀
+  string file_index = 3;                    //算法异常数据文件的索引
+  int32 file_max_num = 4;                   //算法异常数据最大存储数量
+}
+
+message ProductDebugCfg {
+  bool  flag_debug_app_init = 1;            //从app.init启动，打开shell的调试，显示脚本执行过程
+  bool  flag_debug_no_run_app_start = 2;    //不运行app.start脚本
+  bool  flag_debug_no_run_app_init = 3;     //不运行app.init脚本
+  bool  flag_debug_no_run_linux_app  = 4;   //不运行linux_app.elf程序
+  bool  flag_debug_wifi_connect   = 5;      //启动时运行wpa_supplicant,用于测试目的。对应S02wifi.sh脚本
+  bool  flag_debug_run_rid_capture  = 6;    //remoteid启动rid_capture的算法，与我司算法并行运算，可用于调试对比检测结果
+  bool  flag_debug_run_rid_capture_print = 7;   //remoteId使用rid_capture时，打印到控制台。
+  bool  flag_debug_no_report_alink_info = 8;    //不上报alinkinfo,用于升级测试时关闭alinkinfo消息
+  bool  flag_debug_tcp_client_ip = 9;        //调试时，主动不断尝试连接上位机8060端口，用于与PC机上的cusa调试软件连接。此文件内容是上位机的tcp server ip地址：  如192.168.40.2
+  bool  flag_debug_droneid_check_crc = 10;   //droneid收数据时，作crc校验
+  bool  flag_debug_droneid   = 11;           //需填写指定burst_log路径，并开启切频信息打印功能，如：echo "/home/root/burst.log" > /run/media/mmcblk0p1/flag_debug_droneid
+  bool  flag_debug_no_fft_dma  = 12;         //不使用FFT的DMA加速运算功能
+  bool  flag_debug_disable_buzz_motor = 13;  //禁止蜂鸣器和马达
+
+  //时频图抓包功能为频谱侦测机型共有
+  bool  isSupportSpectrogram = 21;
+  PbSpectrogramAttr spectrogramAttr = 22;
+
+  //算法缓存和异常数据记录功能仅机载Tracer有实现
+  bool  isSupportAlgCache = 23;
+  PbAlgCacheAttr algCacheAttr = 24;
+  bool  isSupportAlgExcept = 25;
+  PbAlgExceptAttr algExceptAttr = 26;
+}

@@ -1,0 +1,37 @@
+{
+    "flag_debug_app_init":false,
+    "flag_debug_no_run_app_start":false,
+    "flag_debug_no_run_app_init":false,
+    "flag_debug_no_run_linux_app":false,
+    "flag_debug_wifi_connect":false,
+    "flag_debug_run_rid_capture":false,
+    "flag_debug_run_rid_capture_print":false,
+    "flag_debug_no_report_alink_info":false,
+    "flag_debug_tcp_client_ip":false,
+    "flag_debug_droneid_check_crc":false,
+    "flag_debug_droneid":false,
+    "flag_debug_no_fft_dma":false,
+    "flag_debug_disable_buzz_motor":false,
+    "isSupportSpectrogram":true,
+    "spectrogramAttr":{
+        "file_path": "/run/media/mmcblk0p3/spectrum/debug",
+        "file_prefix": "spectrogram-",
+        "file_index": "curr_log_index",
+        "file_max_num": 100
+    },
+    "isSupportAlgCache":true,
+    "algCacheAttr":{
+        "file_path": "/run/media/mmcblk0p3/spectrum/cache",
+        "file_prefix": "alg-cache-",
+        "file_index": "curr_log_index",
+        "file_max_num": 10,
+        "frame_max_num":30000
+    },
+    "isSupportAlgExcept":true,
+    "algExceptAttr":{
+        "file_path": "/run/media/mmcblk0p3/spectrum/except",
+        "file_prefix": "alg-except-",
+        "file_index": "curr_log_index",
+        "file_max_num": 100
+    }
+}

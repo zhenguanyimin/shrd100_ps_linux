@@ -1,0 +1,63 @@
+stages:
+  - unittest
+  - build_app
+  - build_kernel
+
+unittest:
+  stage: unittest
+  image: 10.240.34.2:10000/cibuilder/gcovr:v1
+  tags:
+    - tracer-builder
+  only:
+    refs:
+      - branches
+      - merge_requests
+  script:
+      - cd linux_app
+      - rm -rf buildtest
+      - mkdir -p buildtest
+      - cd buildtest
+      - cmake ..
+      - make
+      - bin/main
+      - mkdir -p coverage
+      - gcovr . -r .. --print-summary --html-details --html=coverage/index.html --xml-pretty --xml=coverage/coverage.xml --exclude $CI_PROJECT_DIR/linux_app/unittest --exclude $CI_PROJECT_DIR/linux_app/src/utils/lzma --root ${CI_PROJECT_DIR}
+  coverage: '/lines: \d+\.\d+%/'
+  artifacts:
+    name: coverage
+    paths:
+      - linux_app/buildtest/coverage
+    reports:
+      cobertura: linux_app/buildtest/coverage/coverage.xml
+    expire_in: 4 weeks
+
+build_app:
+  stage: build_app
+  image: 10.240.34.2:10000/cibuilder/tracer-app-builder:v1
+  tags:
+    - tracer-builder
+  only:
+    refs:
+      - branches
+      - merge_requests
+      - tags
+  script:
+    - bash linux_app/build_ci.sh
+  artifacts:
+    paths:
+      - linux_app/build/src/linux_app.elf
+      - linux_app/build/src/libeap.so
+      - linux_app/src/inc/app_version.h
+    expire_in: 2 weeks
+
+build_kernel:
+  stage: build_kernel
+  image: 10.240.34.2:10000/cibuilder/xilinx-petalinux:v1
+  tags:
+    - petalinux
+  only:
+    - web
+    - schedules
+    - tags
+  script:
+    - bash kernel/sdk_tracer_petalinux20222/build_ci.sh

@@ -1,0 +1,36 @@
+{
+    "desc": "tracer-p",
+    "verType": "SHRD105L",
+    "netProto": {
+        "netProtoType": 0
+    },
+    "deviceType": 7,
+    "isSupportRemoteId": true,
+    "isSupportDroneId": true,
+    "isSupportSpectrum": false,
+    "isSupportSpectrumOrient": false,
+    "isSupportAirborne": false,
+    "isSupportAirborneOrient": false,
+    "isSupportHitProtect": true,
+    "droneIdAttr": {
+        "isEnableDmaFFT": false
+    },
+    "muteAttr":{
+        "isSupportMuteMode": false,
+        "isSupportSwitchVersion": false,
+    },
+    "burstDataIrqInfoList":[
+        {
+            "channel": 0,
+            "isEnabled": true,
+            "irqDevFileName": "/dev/PL-burst_irq_event_0",
+            "phyMemAddr": "0x60000000"
+        },
+        {
+            "channel": 1,
+            "isEnabled": false,
+            "irqDevFileName": "/dev/PL-burst_irq_event_1",
+            "phyMemAddr": "0x61000000"
+        }
+    ]
+}

@@ -1,0 +1,96 @@
+{
+    "productHwType": "SHRD100-T3",
+    "desc": "tracer T3",
+    "devTtyTypec": "/dev/ttyGS0",
+    "devTtyMcu2Ps": "/dev/ttyUL2",
+    "devTtyWifiBluetooth": "/dev/ttyUL1",
+
+
+    "gpioConfig":{
+        "MioBasePinNum":"0",
+        "EmioBasePinNum":"77",
+        "LinuxBasePinNum":"333",
+        "gpioCfgList":[
+            {
+                "name":"MIO_MUTE_SWITCH",
+                "direction":"DIR_INPUT",
+                "enabled":"true",
+                "mode":"MODE_MIO",
+                "deviceID":"0",
+                "axiChl":"0",
+                "pinNum":"20",
+                "initLevel":"VOL_LOW"
+            },
+            {
+                "name":"EMIO_SWITCH_OE2",
+                "direction":"DIR_INPUT",
+                "enabled":"true",
+                "mode":"MODE_EMIO",
+                "deviceID":"0",
+                "axiChl":"0",
+                "pinNum":"33",
+                "initLevel":"VOL_HIGH"
+            },
+            {
+                "name":"MIO_SWITCH_MODE0",
+                "direction":"DIR_INPUT",
+                "enabled":"true",
+                "mode":"MODE_MIO",
+                "deviceID":"0",
+                "axiChl":"0",
+                "pinNum":"38",
+                "initLevel":"VOL_LOW"
+            },
+            {
+                "name":"MIO_SWITCH_MODE1",
+                "direction":"DIR_INPUT",
+                "enabled":"true",
+                "mode":"MODE_MIO",
+                "deviceID":"0",
+                "axiChl":"0",
+                "pinNum":"40",
+                "initLevel":"VOL_LOW"
+            },
+            {
+                "name":"MIO_SWITCH_MODE2",
+                "direction":"DIR_INPUT",
+                "enabled":"true",
+                "mode":"MODE_MIO",
+                "deviceID":"0",
+                "axiChl":"0",
+                "pinNum":"43",
+                "initLevel":"VOL_LOW"
+            },
+            {
+                "name":"MIO_SWITCH_MODE3",
+                "direction":"DIR_INPUT",
+                "enabled":"true",
+                "mode":"MODE_MIO",
+                "deviceID":"0",
+                "axiChl":"0",
+                "pinNum":"8",
+                "initLevel":"VOL_LOW"
+            },
+            {
+                "name":"EMIO_BUZZER_EN",
+                "direction":"DIR_INPUT",
+                "enabled":"true",
+                "mode":"MODE_EMIO",
+                "deviceID":"0",
+                "axiChl":"0",
+                "pinNum":"86",
+                "initLevel":"VOL_LOW"
+            },
+            {
+                "name":"MIO_MUTE_SWITCH",
+                "direction":"DIR_INPUT",
+                "enabled":"true",
+                "mode":"MODE_MIO",
+                "deviceID":"0",
+                "axiChl":"0",
+                "pinNum":"37",
+                "initLevel":"VOL_LOW"
+            },
+        ]
+    }
+}

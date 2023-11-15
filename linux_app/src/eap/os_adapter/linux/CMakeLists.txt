@@ -1,0 +1,12 @@
+include_directories(${CMAKE_SOURCE_DIR}/src/srv/log)
+include_directories(${CMAKE_SOURCE_DIR}/src/srv/cli)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/pub)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/os_adapter)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/hal)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/cmdproc)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/thread)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/sys)
+
+aux_source_directory(. DIR_LIB_SRCS)
+add_library(os_base ${DIR_LIB_SRCS})
+set (LINUX_ADAPTER_LIBS os_base PARENT_SCOPE)

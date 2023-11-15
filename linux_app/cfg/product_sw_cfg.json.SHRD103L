@@ -1,0 +1,37 @@
+{
+    "desc": "tracer-p support NET_PROTO_TYPE_TRACER_UAVCONTROLLER",
+    "verType": "SHRD103L",
+    "netProto": {
+        "netProtoType": 2
+    },
+    "deviceType": 7,
+    "isSupportRemoteId": true,
+    "isSupportDroneId": true,
+    "isSupportSpectrum": false,
+    "isSupportSpectrumOrient": false,
+    "isSupportAirborne": false,
+    "isSupportAirborneOrient": false,
+    "isSupportWarningWhitelist": true,
+    "isSupportHitProtect": false,
+    "droneIdAttr": {
+        "isEnableDmaFFT": false
+    },
+    "muteAttr":{
+        "isSupportMuteMode": false,
+        "isSupportSwitchVersion": true,
+    },
+    "burstDataIrqInfoList":[
+        {
+            "channel": 0,
+            "isEnabled": true,
+            "irqDevFileName": "/dev/PL-burst_irq_event_0",
+            "phyMemAddr": "0x60000000"
+        },
+        {
+            "channel": 1,
+            "isEnabled": true,
+            "irqDevFileName": "/dev/PL-burst_irq_event_1",
+            "phyMemAddr": "0x61000000"
+        }
+    ]
+}

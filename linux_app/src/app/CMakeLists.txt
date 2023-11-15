@@ -1,0 +1,32 @@
+#add_subdirectory(alg)
+
+include_directories(${CMAKE_SOURCE_DIR}/src/app/alg)
+include_directories(${CMAKE_SOURCE_DIR}/src/app/alg/det_alg)
+include_directories(${CMAKE_SOURCE_DIR}/src/app/alg/det_alg/include)
+include_directories(${CMAKE_SOURCE_DIR}/src/app/alg/droneID)
+include_directories(${CMAKE_SOURCE_DIR}/src/app/alg/droneID/testData)
+include_directories(${CMAKE_SOURCE_DIR}/src/app/alg/droneID/turbofec)
+include_directories(${CMAKE_SOURCE_DIR}/src/app/alg/droneID/turbofec/tests)
+include_directories(${CMAKE_SOURCE_DIR}/src/app/alg/tracking)
+
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/hal)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/pub)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/sys)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/module)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/thread)
+include_directories(${CMAKE_SOURCE_DIR}/src/eap/include/os_adapter)
+include_directories(${CMAKE_SOURCE_DIR}/src/app/alg/droneID)
+include_directories(${CMAKE_SOURCE_DIR}/src/srv/log)
+
+aux_source_directory(. DIR_LIB_SRCS)
+aux_source_directory(./alg DIR_LIB_SRCS)
+aux_source_directory(./alg/det_alg DIR_LIB_SRCS)
+aux_source_directory(./alg/droneID DIR_LIB_SRCS)
+aux_source_directory(./alg/droneID/testData DIR_LIB_SRCS)
+aux_source_directory(./alg/droneID/turbofec DIR_LIB_SRCS)
+aux_source_directory(./alg/tracking DIR_LIB_SRCS)
+
+
+add_library(app ${DIR_LIB_SRCS})
+link_libraries(./alg/det_alg/Lib/libcoreLib.a)
+set(APP_LIBS app PARENT_SCOPE)

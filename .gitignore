@@ -1,0 +1,7 @@
+.vscode/
+opensources/for_tracer_petalinux2022/u-boot-xlnx-xilinx-v2022.2/oe-logs
+opensources/for_tracer_petalinux2022/u-boot-xlnx-xilinx-v2022.2/oe-workdir
+opensources/for_tracer_petalinux2022/linux-xlnx-xilinx-v2022.2/oe-logs
+opensources/for_tracer_petalinux2022/linux-xlnx-xilinx-v2022.2/oe-workdir
+
+kernel/sdk_tracer_petalinux20222/project-spec/meta-user/recipes-apps/app.rc/files/bin/app.tgz

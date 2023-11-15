@@ -1,0 +1,66 @@
+#include "MotorWarning.h"
+
+DEFINE_SINGLETON_NO_CONSTRUCT(MotorWarning)
+
+MotorWarning::MotorWarning()
+{
+    InitWarningLevelArray();
+}
+
+uint16_t MotorWarning::_GetDrvCode()
+{
+    return EAP_DRVCODE_SET_MOTOR_STATE;
+}
+
+void MotorWarning::FillAlarmLevel(uint8_t& alarmLevelValue)
+{
+	if (_targetState > 0)
+	{
+		alarmLevelValue |= 0x20;
+	}
+}
+
+void MotorWarning::InitWarningLevelArray()
+{
+    //level 1
+    _warningLevelArray[EAP_GEAR_POSITION_0][EAP_TARGET_STATE_NOT][DRONE]               = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_0][EAP_TARGET_STATE_NOT][OMNI]                = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_0][EAP_TARGET_STATE_NOT][OMNI_ORIE]           = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_0][EAP_TARGET_STATE_NOT][OMNI_ORIE_DISCOVERY] = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_0][EAP_TARGET_STATE_YES][DRONE]               = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_0][EAP_TARGET_STATE_YES][OMNI]                = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_0][EAP_TARGET_STATE_YES][OMNI_ORIE]           = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_0][EAP_TARGET_STATE_YES][OMNI_ORIE_DISCOVERY] = WARNING_LEVEL_NONE;
+
+    //level 2
+    _warningLevelArray[EAP_GEAR_POSITION_1][EAP_TARGET_STATE_NOT][DRONE]               = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_1][EAP_TARGET_STATE_NOT][OMNI]                = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_1][EAP_TARGET_STATE_NOT][OMNI_ORIE]           = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_1][EAP_TARGET_STATE_NOT][OMNI_ORIE_DISCOVERY] = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_1][EAP_TARGET_STATE_YES][DRONE]               = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_1][EAP_TARGET_STATE_YES][OMNI]                = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_1][EAP_TARGET_STATE_YES][OMNI_ORIE]           = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_1][EAP_TARGET_STATE_YES][OMNI_ORIE_DISCOVERY] = WARNING_LEVEL_NONE;
+
+    //level 3
+    _warningLevelArray[EAP_GEAR_POSITION_2][EAP_TARGET_STATE_NOT][DRONE]               = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_2][EAP_TARGET_STATE_NOT][OMNI]                = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_2][EAP_TARGET_STATE_NOT][OMNI_ORIE]           = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_2][EAP_TARGET_STATE_NOT][OMNI_ORIE_DISCOVERY] = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_2][EAP_TARGET_STATE_YES][DRONE]               = WARNING_LEVEL_HIGH;
+    _warningLevelArray[EAP_GEAR_POSITION_2][EAP_TARGET_STATE_YES][OMNI]                = WARNING_LEVEL_HIGH;
+    _warningLevelArray[EAP_GEAR_POSITION_2][EAP_TARGET_STATE_YES][OMNI_ORIE]           = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_2][EAP_TARGET_STATE_YES][OMNI_ORIE_DISCOVERY] = WARNING_LEVEL_HIGH;
+
+    //level 4
+    _warningLevelArray[EAP_GEAR_POSITION_3][EAP_TARGET_STATE_NOT][DRONE]               = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_3][EAP_TARGET_STATE_NOT][OMNI]                = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_3][EAP_TARGET_STATE_NOT][OMNI_ORIE]           = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_3][EAP_TARGET_STATE_NOT][OMNI_ORIE_DISCOVERY] = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_3][EAP_TARGET_STATE_YES][DRONE]               = WARNING_LEVEL_HIGH;
+    _warningLevelArray[EAP_GEAR_POSITION_3][EAP_TARGET_STATE_YES][OMNI]                = WARNING_LEVEL_HIGH;
+    _warningLevelArray[EAP_GEAR_POSITION_3][EAP_TARGET_STATE_YES][OMNI_ORIE]           = WARNING_LEVEL_NONE;
+    _warningLevelArray[EAP_GEAR_POSITION_3][EAP_TARGET_STATE_YES][OMNI_ORIE_DISCOVERY] = WARNING_LEVEL_HIGH;
+
+}
+

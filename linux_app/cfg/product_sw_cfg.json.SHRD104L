@@ -1,0 +1,39 @@
+{
+    "desc":"tracer-s support Airborne",
+    "verType":"SHRD104L",
+    "netProto":{"netProtoType":1},
+    "deviceType":7,
+    "isSupportRemoteId":false,
+    "isSupportDroneId":false,
+    "isSupportSpectrum":false,
+    "isSupportSpectrumOrient":false,
+    "isSupportAirborne":true,
+    "isSupportAirborneOrient":true,
+    "isSupportWarningWhitelist": false,
+    "isSupportHitProtect": false,
+    "droneIdAttr":{
+        "isEnableDmaFFT":false
+    },
+    "muteAttr":{
+        "isSupportMuteMode": false,
+        "isSupportSwitchVersion": false,
+    },
+    "algCompensateAttr":{
+        "file_path": "/run/media/mmcblk0p3/spectrum/calibrate",
+        "file_name": "compensate.bin",
+    },
+    "burstDataIrqInfoList":[
+        {
+            "channel": 0,
+            "isEnabled": false,
+            "irqDevFileName": "/dev/PL-burst_irq_event_0",
+            "phyMemAddr": "0x60000000"
+        },
+        {
+            "channel": 1,
+            "isEnabled": false,
+            "irqDevFileName": "/dev/PL-burst_irq_event_1",
+            "phyMemAddr": "0x61000000"
+        }
+    ]
+}

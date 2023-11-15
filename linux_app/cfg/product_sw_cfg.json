@@ -1,0 +1,31 @@
+{
+    "desc": "tracer-p",
+    "verType": "SHRD101L",
+    "netProto": {
+        "netProtoType": 0
+    },
+    "isSupportRemoteId": true,
+    "isSupportDroneId": true,
+    "isSupportSpectrum": false,
+    "isSupportSpectrumOrient": false,
+    "isSupportAirborne": false,
+    "isSupportAirborneOrient": false,
+    "droneIdAttr": {
+        "isEnableDmaFFT": false
+    },
+
+    "burstDataIrqInfoList":[
+        {
+            "channel": 0,
+            "isEnabled": true,
+            "irqDevFileName": "/dev/PL-burst_irq_event_0",
+            "phyMemAddr": "0x60000000"
+        },
+        {
+            "channel": 1,
+            "isEnabled": true,
+            "irqDevFileName": "/dev/PL-burst_irq_event_1",
+            "phyMemAddr": "0x61000000"
+        }
+    ]
+}

@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+message PbDroneIdAttr{
+  bool isEnableDmaFFT = 1;
+
+}
+
+message PbMuteAttr{
+  bool isSupportMuteMode = 1;
+  bool isSupportSwitchVersion = 2;
+}
+
+message PbNetProto{
+  uint32 netProtoType = 1;
+}
+
+// 算法补偿数据(仅限该SN的Tracer专用)
+message PbAlgCompensateAttr{
+  string file_path = 1;         //算法补偿数据存储路径
+  string file_name = 2;         //算法补偿数据文件名
+}
+
+
+/**************PbBurstDataIrqInfo is used to init burst_data_irq_info_t***************/
+message PbBurstDataIrqInfo{
+  int32     channel = 1;        //int channel;
+  bool      isEnabled = 2;      // int    is_enable;
+  string    irqDevFileName = 3; // char * irq_dev_file;
+  string    phyMemAddr = 4;     // void * phy_addr
+  
+  /************Below attributes are initialized in C++ code*************
+  uint32_t    phy_data_len;
+  void *      vir_addr; //mapped by mmmap()
+  uint32_t    vir_data_len;
+  DDR_BURST_INTR_HANDLER  rcv_handler;
+  uint64_t    bufferAdc_64bit[VALID_ADC_BUF_LEN]; 
+  ***********************************************************/
+}
+
+message ProductSwCfg {
+  string  verType = 1;
+  string  desc = 2;
+  PbNetProto netProto = 3;
+  uint32  deviceType = 4; 
+
+  bool    isSupportRemoteId = 16;
+  bool    isSupportDroneId  = 17;
+  bool    isSupportSpectrum = 18;
+  bool    isSupportSpectrumOrient = 19;
+  bool    isSupportAirborne = 20;
+  bool    isSupportAirborneOrient = 21;
+  bool    isSupportWarningWhitelist = 22;
+  bool    isSupportHitProtect  = 23;
+
+  PbDroneIdAttr droneIdAttr = 100;
+  PbMuteAttr muteAttr = 101;
+
+  //补偿数据功能为机载Tracer专有,仅在isSupportAirborne=true时生效
+  PbAlgCompensateAttr algCompensateAttr = 110;
+  
+  //_sg_burst_data_irq_info_table
+  repeated PbBurstDataIrqInfo   burstDataIrqInfoList = 200;
+}

@@ -1,0 +1,8 @@
+add_subdirectory(cfg)
+add_subdirectory(cmdproc)
+add_subdirectory(hal)
+add_subdirectory(module)
+add_subdirectory(os_adapter)
+add_subdirectory(pub)
+add_subdirectory(sys)
+add_subdirectory(thread)

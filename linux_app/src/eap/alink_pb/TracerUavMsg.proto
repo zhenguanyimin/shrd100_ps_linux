@@ -1,0 +1,176 @@
+syntax = "proto3";
+
+/*
+MAVLINK协议格式
+字节       定义     内容         数值范围        说明
+0          magic    帧头         0xFD            表示开始一个新的包
+1          len_l    有效数据
+                    长度低8位    0~255           表示有效数据的长度的低8位
+2          len_h    有效数据
+                    长度高8位    0~255           表示有效数据的长度的高8位
+3          seq      帧序号       0~16            每个设备计数自己的发送序列，允许检测丢包。
+4          destid   设备ID(组件) 0~255           接收者的设备ID(见设备类型定义), UAV发送消息时填0x7(DEV_DRONEID)
+5          sourceid 设备ID(系统) 0~255           发送者的设备ID(见设备类型定义), UAV发送消息时填0x8(DEV_UAV)
+6          msgid    消息ID       0~255           消息ID用于识别该MAVLINK帧的含义, 固定填0xE5(EAP_ALINK_TRACER_UAV_MESSAGE)
+7          Ack      是否需要应答 0 - 1           0：发送不需要应答, 填0
+                                                 1：发送并需要应答
+8          checksum 包头校验值   0~255           计算校验值校验从字节0至字节7(和校验), 参考_GetHeaderChecksum
+9至(N+8)   payload  有效数据    (0~65014)字节    有效传送的数据
+N+8+1至    crc      整帧数据校验(2个字节)        计算校验值不包含帧头, 校验从字节1至字节N+8, X.25 checksum算法
+N+8+2
+
+
+       0                 1               2                 3
+0 --------------------------------------------------------------------
+     magic      |     len_l      |    len_h       |      seq       |
+4 --------------------------------------------------------------------
+     destid     |     sourceid   |    msgid       |      Ack       |
+8 --------------------------------------------------------------------
+     checksum   |        Payload   TracerUavMessagePB              |
+12--------------------------------------------------------------------
+                         TracerUavMessagePB                
+16--------------------------------------------------------------------
+                         ...
+                         ...
+  --------------------------------------------------------------------
+              CRC                |
+  --------------------------------
+
+*/
+
+/*
+包头校验值算法
+uint8_t _GetHeaderChecksum(const alink_msg_head_t& header)
+{
+	uint8_t *pkt = (uint8_t *)&header;
+	uint8_t checksum = 0;
+	uint8_t i = 0;
+
+	for (i = 0; i < (sizeof(alink_msg_head_t) - 1); i++)
+	{
+		checksum += pkt[i];
+	}
+
+	return checksum;
+}
+*/
+
+/*
+设备类型定义
+enum 
+{
+  DEV_NONE  = 0,
+  DEV_AEAG  = 0x01,
+  DEV_SREEN = 0x02,
+  DEV_RADAR = 0x03,
+  DEV_PC    = 0x04,
+  DEV_C2    = 0x06,
+  DEV_TRACER = 0x07,
+  DEV_UAV    = 0x08,
+  MAV_COMPONENT_ENUM_END = 256,
+};
+
+//Tracer与UAV交互信息ID
+enum
+{
+  EAP_ALINK_TRACER_UAV_MESSAGE = 0xE5,
+  EAP_ALINK_RPT_HEARTBEAT      = 0xEF,  //用于UsbTypec的心跳报文, 频率1Hz
+};
+*/
+
+/*
+#pragma pack(1)
+typedef struct alink_msg_head
+{
+    uint8_t magic;    ///< protocol magic marker, 0xFD 表示开始一个新的包
+    uint8_t len_lo;   ///< Low byte of length of payload, 表示有效数据的长度的低8位
+    uint8_t len_hi;   ///< Hight byte of length of payload, 表示有效数据的长度的高8位
+    uint8_t seq;      ///< Sequence of packet, 每个设备计数自己的发送序列，允许检测丢包
+    uint8_t destid;   ///< ID of message destination, 消息接收者的设备ID, UAV发送消息时填0x7(DEV_DRONEID)
+    uint8_t sourceid; ///< ID of the message sounrce, 消息发送者的设备ID, UAV发送消息时填0x8(DEV_UAV)
+    uint8_t msgid;    ///< ID of message in payload, 消息ID用于识别该MAVLINK帧的含义, 固定填0xE5(EAP_ALINK_TRACER_UAV_MESSAGE)
+    uint8_t ans;      ///< Whether the command requires an answer 0:no  1:yes
+    uint8_t checksum; ///< Checksum of message header, 计算校验值校验从字节0至字节7(和校验)
+    uint8_t payload[0];  ///< point to the start of payload data
+} alink_msg_head_t;
+#pragma pack()
+*/
+
+/*
+typedef struct alink_data_crc
+{
+    uint16_t crc;      //X.25 checksum
+}alink_data_crc_t;
+*/
+
+package protobuf.traceruav;
+
+// 输入定义-控制指令
+message CtrlWorkModePB {
+  uint32 workMode = 2;    // 工作状态控制
+  uint32 dxNum    = 3;    // 定向目标编号
+  uint32 dxFreq   = 4;    // 定向频率
+}
+
+// 输入定义-姿态信息
+message FlyStatusPB {
+  sint32 yaw       = 2;   // 飞机偏航角,0.1°
+  sint32 pitch     = 3;   // 飞机俯仰角,0.1°
+  sint32 roll      = 4;   // 飞机滚转角,0.1°
+  sint32 wY        = 5;   // 飞机偏航角速度,0.01°/ s
+  sint32 wP        = 6;   // 飞机俯仰角速度,0.01°/ s
+  sint32 wR        = 7;   // 飞机滚转角速度,0.01°/ s
+  sint64 longitude = 8;   // 飞机经度,0.0000001°
+  sint64 latitude  = 9;   // 飞机纬度,0.0000001°
+  sint64 altitude  = 10;  // 飞机高度,0.01m
+  sint32 vX        = 11;  // 飞机速度X分量,0.01m / s
+  sint32 vY        = 12;  // 飞机速度X分量,0.01m / s
+  sint32 vZ        = 13;  // 飞机速度X分量,0.01m / s
+}
+
+// 输出定义-测量信息, 每120ms采样数据计算完成后，系统向外输出测量结果报文
+message MeasureInfoPb {
+  uint32 workStatus = 2;   // 系统工作状态
+  uint32 tarNum     = 3;   // 目标有效个数
+
+  message MeasureInfoData {
+    uint32 tNum  = 2;       // 目标编号
+    uint32 tFreq = 3;       // 目标频率
+    uint32 tAmp  = 4;       // 目标幅度
+    sint32 tmFw  = 5;       // 目标测量系方位角,0.1°
+    sint32 tmFy  = 6;       // 目标测量系方位角,0.1°
+    sint32 tfFw  = 7;       // 目标测量系方位角,0.1°
+    sint32 tfFy  = 8;       // 目标测量系方位角,0.1°
+  }
+
+  repeated MeasureInfoData meaInfoData = 4;
+}
+
+enum MessageType {
+  TRACERUAVMSG_HEART_BEAT        = 0;  //UsbTypec的心跳报文类型, 不需要payload
+  TRACERUAVMSG_WORK_MODE_TYPE    = 1;
+  TRACERUAVMSG_FLY_STATUS_TYPE   = 2;
+  TRACERUAVMSG_MEASURE_INFO_TYPE = 3;
+
+}
+
+message TracerUavMessagePB {
+
+  string msgChannel       = 2; // 消息通道, 虚拟tcp/udp通道号用来复用物流tcp/udp通道, 默认填空字符串
+  MessageType msgType     = 3; // message类型, CtrlWorkModePB, FlyStatusPB ..
+  optional string msgName = 4; // message名字
+  uint32 msgHandle        = 5; // message编号用来配对请求和应答消息(用相同的uint32值), 不同的配对消息依次递增使用
+  uint32 msgSeq           = 6; // message序列号
+  
+  optional CtrlWorkModePB workMode    = 10;
+  optional FlyStatusPB    flyStatus   = 11;
+  optional MeasureInfoPb  measureInfo = 12;
+}
+
+// angle info is got from local hardware
+message AngleInfoPB
+{
+  float roll  = 2;
+  float pitch = 3;
+  float yaw   = 4;
+};
